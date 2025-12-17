@@ -61,7 +61,7 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        $this->authorize('view', $client);
+        //$this->authorize('view', $client);
         
         $notes = $client->notes()->latest()->paginate(5);
         
@@ -70,14 +70,14 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     {
-        $this->authorize('update', $client);
+        //$this->authorize('update', $client);
         
         return view('clients.edit', compact('client'));
     }
 
     public function update(Request $request, Client $client)
     {
-        $this->authorize('update', $client);
+        //$this->authorize('update', $client);
         
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -97,7 +97,7 @@ class ClientController extends Controller
 
     public function destroy(Client $client)
     {
-        $this->authorize('delete', $client);
+        //$this->authorize('delete', $client);
         
         $client->delete();
         
