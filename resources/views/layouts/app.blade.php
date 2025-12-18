@@ -14,31 +14,34 @@
     
     <!-- Styles -->
     <style>
-        :root {
-            --color-text: #160b19;
-            --color-bg: #f6f1f9;
-            --color-primary: #52285d;
-            --color-secondary: #cd89b5;
-            --color-accent: #af4b75;
-            --color-border: #e5d8eb;
-            --color-success: #10b981;
-            --color-warning: #f59e0b;
-            --color-danger: #ef4444;
-            --color-success: #10b981;
-            --color-warning: #f59e0b;
-            --color-gray-400: #9ca3af;
+        /* Theme Variables - EXACTLY as you specified */
+        :root[data-theme="light"] {
+            --text: #160b19;
+            --background: #f6f1f9;
+            --primary: #53285d;
+            --secondary: #cd89b5;
+            --accent: #af4b75;
         }
-
-        [data-theme="dark"] {
-            --color-text: #f6f1f9;
-            --color-bg: #160b19;
-            --color-primary: #b184bb;
-            --color-secondary: #8a4a72;
-            --color-accent: #d16a97;
-            --color-border: #2d1b32;
-            --color-success: #34d399;
-            --color-warning: #fbbf24;
-            --color-gray-400: #6b7280;
+        
+        :root[data-theme="dark"] {
+            --text: #f1e6f4;
+            --background: #0b060e;
+            --primary: #cda2d7;
+            --secondary: #76325e;
+            --accent: #b4507a;
+        }
+        
+        /* Use ONLY the provided colors */
+        :root {
+            --color-text: var(--text);
+            --color-bg: var(--background);
+            --color-primary: var(--primary);
+            --color-secondary: var(--secondary);
+            --color-accent: var(--accent);
+            --color-border: var(--secondary);
+            --color-danger: var(--accent);
+            --color-warning: var(--secondary);
+            --color-success: var(--primary);
         }
 
         * {
@@ -63,67 +66,6 @@
             padding: 0 1rem;
         }
 
-        /* Histogram Chart Styles */
-        .histogram-chart {
-            display: flex;
-            align-items: flex-end; /* Anchors bars to the bottom */
-            justify-content: space-around;
-            height: 250px; 
-            padding: 40px 10px 10px 10px;
-            margin-top: 20px;
-            border-bottom: 2px solid var(--color-border);
-            background-color: transparent;
-        }
-
-        .chart-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-        }
-
-        .bar-container {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            position: relative;
-        }
-
-        .bar {
-            width: 45px; /* Fixed width prevents horizontal stretching */
-            border-radius: 10px; /* Match the rounded tops in your image */
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .bar:hover {
-            transform: scaleY(1.05); /* Grow slightly on hover */
-            filter: brightness(1.1);
-            cursor: pointer;
-        }
-
-        .bar-value {
-            position: absolute;
-            top: -30px; /* Positions number above the bar */
-            left: 50%;
-            transform: translateX(-50%);
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--color-text);
-        }
-
-        .bar-label {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--color-text);
-            text-align: center;
-            opacity: 0.8;
-        }
-
         /* Header Styles */
         header {
             background-color: var(--color-bg);
@@ -136,7 +78,7 @@
         }
 
         [data-theme="dark"] header {
-            background-color: rgba(22, 11, 25, 0.95);
+            background-color: rgba(11, 6, 14, 0.95);
         }
 
         .navbar {
@@ -202,7 +144,7 @@
         }
 
         .theme-toggle:hover {
-            background-color: var(--color-border);
+            background-color: rgba(var(--color-primary), 0.1);
         }
 
         .user-dropdown {
@@ -223,7 +165,7 @@
         }
 
         .user-btn:hover {
-            background-color: var(--color-border);
+            background-color: rgba(var(--color-primary), 0.1);
         }
 
         .dropdown-menu {
@@ -253,7 +195,7 @@
         }
 
         .dropdown-menu a:hover {
-            background-color: var(--color-border);
+            background-color: rgba(var(--color-primary), 0.1);
         }
 
         /* Main Content */
@@ -273,21 +215,21 @@
         }
 
         .alert-success {
-            background-color: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--color-success);
-            color: var(--color-success);
+            background-color: rgba(83, 40, 93, 0.1);
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
         }
 
         .alert-danger {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--color-danger);
-            color: var(--color-danger);
+            background-color: rgba(175, 75, 117, 0.1);
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
         }
 
         .alert-warning {
-            background-color: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--color-warning);
-            color: var(--color-warning);
+            background-color: rgba(205, 137, 181, 0.1);
+            border: 1px solid var(--color-secondary);
+            color: var(--color-secondary);
         }
 
         .close-alert {
@@ -356,7 +298,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: var(--color-primary);
+            background-color: var(--color-accent);
         }
 
         .btn-accent {
@@ -380,7 +322,7 @@
         }
 
         .btn-danger {
-            background-color: var(--color-danger);
+            background-color: var(--color-accent);
             color: white;
         }
 
@@ -414,15 +356,15 @@
         .form-control:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(82, 40, 93, 0.1);
+            box-shadow: 0 0 0 3px rgba(83, 40, 93, 0.1);
         }
 
         .form-control.is-invalid {
-            border-color: var(--color-danger);
+            border-color: var(--color-accent);
         }
 
         .invalid-feedback {
-            color: var(--color-danger);
+            color: var(--color-accent);
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
@@ -467,23 +409,23 @@
         }
 
         .badge-active {
-            background-color: rgba(16, 185, 129, 0.2);
-            color: var(--color-success);
+            background-color: rgba(83, 40, 93, 0.2);
+            color: var(--color-primary);
         }
 
         .badge-inactive {
-            background-color: rgba(107, 114, 128, 0.2);
-            color: #6b7280;
+            background-color: rgba(175, 75, 117, 0.2);
+            color: var(--color-accent);
         }
 
         .badge-lead {
-            background-color: rgba(245, 158, 11, 0.2);
-            color: var(--color-warning);
+            background-color: rgba(205, 137, 181, 0.2);
+            color: var(--color-secondary);
         }
 
         .badge-due {
-            background-color: rgba(239, 68, 68, 0.2);
-            color: var(--color-danger);
+            background-color: rgba(175, 75, 117, 0.3);
+            color: var(--color-accent);
         }
 
         /* Stats Cards */
@@ -590,6 +532,41 @@
             opacity: 0.7;
             font-size: 0.875rem;
         }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .pagination a, .pagination span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.5rem;
+            height: 2.5rem;
+            padding: 0 0.75rem;
+            border-radius: 0.5rem;
+            background-color: var(--color-bg);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .pagination a:hover {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        
+        .pagination .active span {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
     </style>
     
     <!-- Scripts -->
@@ -603,19 +580,19 @@
             localStorage.setItem('theme', newTheme);
         }
 
-        // Set theme on load
+        //Set theme on load
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             
-            // Close alerts
+            //Close alerts
             document.querySelectorAll('.close-alert').forEach(button => {
                 button.addEventListener('click', () => {
                     button.closest('.alert').style.display = 'none';
                 });
             });
             
-            // Dropdown toggle
+            //Dropdown toggle
             const userBtn = document.querySelector('.user-btn');
             if (userBtn) {
                 userBtn.addEventListener('click', () => {
@@ -624,7 +601,7 @@
                 });
             }
             
-            // Close dropdown when clicking outside
+            //Close dropdown when clicking outside
             document.addEventListener('click', (event) => {
                 const dropdowns = document.querySelectorAll('.dropdown-menu.show');
                 dropdowns.forEach(dropdown => {

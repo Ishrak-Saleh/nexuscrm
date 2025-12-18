@@ -24,14 +24,14 @@ class DashboardController extends Controller
                 ->count(),
         ];
         
-        // Get clients with most notes (most active)
+        //Get clients with most notes (most active)
         $mostActiveClients = $user->clients()
             ->withCount('notes')
             ->orderBy('notes_count', 'desc')
             ->take(5)
             ->get();
         
-        // Get upcoming follow-ups
+        //Get upcoming follow-ups
         $upcomingFollowUps = $user->clients()
             ->where('next_follow_up', '>=', today())
             ->where('next_follow_up', '<=', today()->addDays(7))
@@ -39,14 +39,13 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
         
-        // Get recent notes
+        //Get recent notes
         $recentNotes = $user->notes()
             ->with('client')
             ->latest()
             ->take(5)
             ->get();
         
-        // Weekly follow-up data with cap at 15
         $weeklyData = [];
         $maxWeekly = 0;
         
@@ -56,7 +55,7 @@ class DashboardController extends Controller
                 ->whereDate('next_follow_up', $date)
                 ->count();
             
-            // Apply cap of 15 for visualization
+            
             $cappedCount = min($count, 15);
             $maxWeekly = max($maxWeekly, $cappedCount);
             
@@ -64,9 +63,9 @@ class DashboardController extends Controller
                 'day' => $date->format('D'),
                 'full_day' => $date->format('l'),
                 'date' => $date->format('M d'),
-                'count' => $count, // Original count
-                'capped_count' => $cappedCount, // Capped count for visualization
-                'is_capped' => $count > 15, // Flag if original count exceeds cap
+                'count' => $count, 
+                'capped_count' => $cappedCount, 
+                'is_capped' => $count > 15, 
                 'is_today' => $date->isToday(),
                 'is_tomorrow' => $date->isTomorrow(),
             ];

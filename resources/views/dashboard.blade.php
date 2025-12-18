@@ -140,7 +140,7 @@
                                 <div class="bar"
                                 style="height: {{ $heightPx }}px;
                                         background-color: {{ $barColor }};
-                                        {{ $day['is_capped'] ? 'border-top: 3px dashed white;' : '' }}">
+                                        {{ $day['is_capped'] ? 'border-top: 3px dashed var(--color-text);' : '' }}">
 
                                     @if($day['count'] > 0)
                                         <div class="bar-value" data-original="{{ $day['count'] }}">
@@ -156,7 +156,11 @@
                             <div class="day-count">
                                 {{ $day['count'] }} follow-up{{ $day['count'] != 1 ? 's' : '' }}
                                 @if($day['is_capped'])
-                                    <span class="capped-warning" title="Exceeds daily visualization limit">⚠️</span>
+                                    <span class="capped-warning" title="Exceeds daily visualization limit">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 9V11M12 15H12.01M5.07183 19H18.9282C20.4678 19 21.4301 17.3333 20.6603 16L13.7321 4C12.9623 2.66667 11.0377 2.66667 10.2679 4L3.33975 16C2.56995 17.3333 3.53223 19 5.07183 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -202,7 +206,13 @@
                 
                 @if(count($exceededDays) > 0)
                     <div class="capped-alert">
-                        <div class="alert-icon">ℹ️</div>
+                        <div class="alert-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
                         <div class="alert-text">
                             <strong>Note:</strong> Bars are capped at 15 for visualization. 
                             {{ count($exceededDays) }} day{{ count($exceededDays) > 1 ? 's' : '' }} exceed this limit.
@@ -270,13 +280,29 @@
                         <div class="activity-item">
                             <div class="activity-icon {{ $note->type }}">
                                 @if($note->type == 'call')
-                                    📞
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 16.92V19.92C22 20.47 21.55 20.92 21 20.92C19.95 20.92 18.91 20.77 17.92 20.47C16.15 19.96 14.45 19.12 12.99 17.99C10.95 16.3 9.16 13.92 8 11.32C7.21 9.56 6.82 7.68 6.82 5.78C6.82 5.23 7.27 4.78 7.82 4.78H10.82C11.37 4.78 11.82 5.23 11.82 5.78C11.82 7.3 12.22 8.79 12.99 10.12C13.24 10.57 13.16 11.15 12.79 11.51L11 13.3C12.68 15.77 15.05 17.45 17.53 18.11L19.32 16.32C19.68 15.96 20.26 15.88 20.71 16.13C21.37 16.49 22 17.18 22 17.92Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 @elseif($note->type == 'meeting')
-                                    👥
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8518 20.8581 15.3516 20 15.13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 @elseif($note->type == 'email')
-                                    ✉️
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M22 6L12 13L2 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 @else
-                                    📝
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 2V8H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 13H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16 17H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M10 9H9H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
                                 @endif
                             </div>
                             <div class="activity-content">
@@ -315,17 +341,22 @@
         <h2 class="card-title">Quick Actions</h2>
         <div class="quick-actions">
             <a href="{{ route('clients.create') }}" class="quick-action-btn primary-btn">
-                <span class="action-icon">+</span>
+                <span class="action-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
                 <span class="action-label">Add New Client</span>
             </a>
             
             <a href="{{ route('clients.today-followups') }}" class="quick-action-btn accent-btn">
                 <span class="action-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 10H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M7 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M17 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 10H3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 3V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 3V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 3V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
                 <span class="action-label">Today's Follow-ups</span>
@@ -337,18 +368,13 @@
             <a href="{{ route('clients.index') }}" class="quick-action-btn secondary-btn">
                 <span class="action-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8518 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8518 20.8581 15.3516 20 15.13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </span>
                 <span class="action-label">All Clients</span>
-            </a>
-            
-            <a href="#" onclick="document.getElementById('addNoteForm').scrollIntoView()" class="quick-action-btn">
-                <span class="action-icon">📝</span>
-                <span class="action-label">Add Quick Note</span>
             </a>
         </div>
     </div>
@@ -419,14 +445,6 @@
     }
     
     /* Card Styles */
-    .card {
-        background-color: var(--color-bg);
-        border: 1px solid var(--color-border);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-    }
-    
     .card-title {
         font-size: 1.25rem;
         font-weight: 600;
@@ -455,7 +473,7 @@
     
     .client-activity-item:hover {
         border-color: var(--color-border);
-        background-color: rgba(82, 40, 93, 0.05);
+        background-color: rgba(83, 40, 93, 0.05);
     }
     
     .client-info {
@@ -524,7 +542,7 @@
     }
     
     .upcoming-badge {
-        background-color: rgba(82, 40, 93, 0.1);
+        background-color: rgba(83, 40, 93, 0.1);
         color: var(--color-primary);
     }
     
@@ -598,6 +616,10 @@
         display: none;
     }
     
+    .bar:hover .bar-value {
+        display: block;
+    }
+    
     .day-count {
         margin-top: 0.5rem;
         font-size: 0.75rem;
@@ -605,6 +627,15 @@
         text-align: center;
         min-height: 1.5rem;
         color: var(--color-text);
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    
+    .capped-warning svg {
+        width: 16px;
+        height: 16px;
+        color: var(--color-accent);
     }
     
     /* Weekly Chart with Cap */
@@ -643,12 +674,6 @@
         font-size: 0.875em;
         font-weight: bold;
         margin-left: 1px;
-    }
-    
-    .capped-warning {
-        margin-left: 2px;
-        opacity: 0.8;
-        cursor: help;
     }
     
     /* Chart Scale */
@@ -713,8 +738,16 @@
     }
     
     .alert-icon {
-        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         flex-shrink: 0;
+    }
+    
+    .alert-icon svg {
+        width: 20px;
+        height: 20px;
+        color: var(--color-accent);
     }
     
     .alert-text {
@@ -756,7 +789,7 @@
     }
     
     .max-exceeded {
-        color: #ef4444;
+        color: var(--color-accent);
     }
     
     .max-normal {
@@ -777,7 +810,7 @@
     }
     
     .followup-item:hover {
-        background-color: rgba(82, 40, 93, 0.05);
+        background-color: rgba(83, 40, 93, 0.05);
     }
     
     .followup-content {
@@ -839,7 +872,7 @@
         flex-shrink: 0;
     }
     
-    /* Recent Activity Styles */
+    /* Recent Activity Styles - UPDATED TIMELINE */
     .activity-timeline {
         position: relative;
     }
@@ -851,14 +884,16 @@
         position: relative;
     }
     
+    /* UPDATED: Timeline line starts BELOW the icon */
     .activity-item:not(:last-child)::after {
         content: '';
         position: absolute;
-        left: 20px;
-        top: 40px;
-        bottom: -10px;
+        left: 20px; /* Center of the icon (20px = 40px/2) */
+        top: 50px; /* CHANGED: Start BELOW the 40px icon + padding */
+        bottom: -10px; /* Extend to next item */
         width: 1px;
         background-color: var(--color-border);
+        z-index: 1;
     }
     
     .activity-icon {
@@ -871,16 +906,24 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        font-size: 1.25rem;
+        position: relative;
+        z-index: 2; /* Ensure icon appears above the line */
     }
     
     .activity-icon.call { background-color: var(--color-accent); }
     .activity-icon.meeting { background-color: var(--color-primary); }
     .activity-icon.email { background-color: var(--color-secondary); }
     
+    .activity-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
     .activity-content {
         flex: 1;
         min-width: 0;
+        position: relative;
+        z-index: 2; /* Ensure content appears above the line */
     }
     
     .activity-header {
@@ -975,7 +1018,7 @@
     
     .primary-btn {
         border-color: var(--color-primary);
-        background-color: rgba(82, 40, 93, 0.1);
+        background-color: rgba(83, 40, 93, 0.1);
     }
     
     .accent-btn {
@@ -989,14 +1032,14 @@
     }
     
     .action-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 1.25rem;
         width: 36px;
         height: 36px;
         border-radius: 50%;
         background-color: var(--color-border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
     
     .primary-btn .action-icon {
@@ -1012,6 +1055,11 @@
     .secondary-btn .action-icon {
         background-color: var(--color-secondary);
         color: white;
+    }
+    
+    .action-icon svg {
+        width: 20px;
+        height: 20px;
     }
     
     .action-label {
@@ -1070,7 +1118,7 @@
     }
     
     .btn-secondary:hover {
-        background-color: var(--color-primary);
+        background-color: var(--color-accent);
     }
     
     .btn-accent {
@@ -1103,18 +1151,18 @@
     }
     
     .badge-active {
-        background-color: rgba(16, 185, 129, 0.2);
-        color: #10b981;
+        background-color: rgba(83, 40, 93, 0.2);
+        color: var(--color-primary);
     }
     
     .badge-inactive {
-        background-color: rgba(107, 114, 128, 0.2);
-        color: #6b7280;
+        background-color: rgba(175, 75, 117, 0.2);
+        color: var(--color-accent);
     }
     
     .badge-lead {
-        background-color: rgba(245, 158, 11, 0.2);
-        color: #f59e0b;
+        background-color: rgba(205, 137, 181, 0.2);
+        color: var(--color-secondary);
     }
     
     /* Animations */
@@ -1148,6 +1196,9 @@
             grid-template-columns: repeat(2, 1fr);
         }
         
+        .chart-bars {
+            height: 220px;
+        }
         
         .bar-container {
             height: 150px;
@@ -1172,6 +1223,11 @@
         .quick-actions {
             grid-template-columns: 1fr;
         }
+        
+        /* Adjust timeline for mobile */
+        .activity-item:not(:last-child)::after {
+            top: 45px; /* Adjust for mobile */
+        }
     }
     
     @media (max-width: 480px) {
@@ -1179,6 +1235,9 @@
             grid-template-columns: 1fr;
         }
         
+        .chart-bars {
+            height: 180px;
+        }
         
         .bar-container {
             height: 100px;
@@ -1203,6 +1262,11 @@
             width: 100%;
             justify-content: space-between;
         }
+        
+        /* Adjust timeline for smaller screens */
+        .activity-item:not(:last-child)::after {
+            top: 40px; /* Adjust for very small screens */
+        }
     }
 </style>
 @endpush
@@ -1210,16 +1274,22 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Initialize badge colors
-        const badges = document.querySelectorAll('.badge');
-        badges.forEach(badge => {
-            const type = badge.className.match(/badge-(\w+)/);
-            if (type) {
-                const color = getComputedStyle(document.documentElement)
-                    .getPropertyValue(`--color-${type[1]}`) || '#6b7280';
-                badge.style.backgroundColor = `${color}20`;
-                badge.style.color = color;
-            }
+        // Show bar values on hover
+        const bars = document.querySelectorAll('.bar');
+        bars.forEach(bar => {
+            bar.addEventListener('mouseenter', () => {
+                const barValue = bar.querySelector('.bar-value');
+                if (barValue) {
+                    barValue.style.display = 'block';
+                }
+            });
+            
+            bar.addEventListener('mouseleave', () => {
+                const barValue = bar.querySelector('.bar-value');
+                if (barValue) {
+                    barValue.style.display = 'none';
+                }
+            });
         });
         
         // Add tooltips for capped warning icons
