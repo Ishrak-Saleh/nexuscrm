@@ -24,7 +24,7 @@ class DashboardController extends Controller
                 ->count(),
         ];
         
-        //Get clients with most notes (which is most active)
+        //Get clients with most notes (most active)
         $mostActiveClients = $user->clients()
             ->withCount('notes')
             ->orderBy('notes_count', 'desc')
@@ -46,11 +46,38 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
         
+        $weeklyData = [];
+        $maxWeekly = 0;
+        
+        for ($i = 0; $i < 7; $i++) {
+            $date = now()->addDays($i);
+            $count = $user->clients()
+                ->whereDate('next_follow_up', $date)
+                ->count();
+            
+            
+            $cappedCount = min($count, 15);
+            $maxWeekly = max($maxWeekly, $cappedCount);
+            
+            $weeklyData[] = [
+                'day' => $date->format('D'),
+                'full_day' => $date->format('l'),
+                'date' => $date->format('M d'),
+                'count' => $count, 
+                'capped_count' => $cappedCount, 
+                'is_capped' => $count > 15, 
+                'is_today' => $date->isToday(),
+                'is_tomorrow' => $date->isTomorrow(),
+            ];
+        }
+        
         return view('dashboard', compact(
             'stats', 
             'mostActiveClients', 
             'upcomingFollowUps', 
-            'recentNotes'
+            'recentNotes',
+            'weeklyData',
+            'maxWeekly'
         ));
     }
 }

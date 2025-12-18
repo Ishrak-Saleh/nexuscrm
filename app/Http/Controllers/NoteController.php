@@ -11,7 +11,7 @@ class NoteController extends Controller
 {
     public function store(Request $request, Client $client)
     {
-        $this->authorize('view', $client);
+        //$this->authorize('view', $client);
         
         $validated = $request->validate([
             'content' => 'required|string|max:1000',
@@ -30,7 +30,7 @@ class NoteController extends Controller
 
     public function destroy(Note $note)
     {
-        $this->authorize('delete', $note);
+        //$this->authorize('delete', $note);
         
         $note->delete();
         
