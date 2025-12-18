@@ -23,6 +23,23 @@ class DashboardController extends Controller
                 ->where('status', 'lead')
                 ->count(),
         ];
+
+        //Follow-up data for next 7 days
+        $followUpData = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = now()->addDays($i);
+            $count = $user->clients()
+                ->whereDate('next_follow_up', $date)
+                ->count();
+            
+            $followUpData[] = [
+                'date' => $date->format('D, M d'),
+                'short_date' => $date->format('D'),
+                'count' => $count,
+                'is_today' => $date->isToday(),
+                'is_tomorrow' => $date->isTomorrow(),
+            ];
+        }
         
         //Get clients with most notes (which is most active)
         $mostActiveClients = $user->clients()
@@ -50,7 +67,8 @@ class DashboardController extends Controller
             'stats', 
             'mostActiveClients', 
             'upcomingFollowUps', 
-            'recentNotes'
+            'recentNotes',
+            'followUpData'
         ));
     }
 }

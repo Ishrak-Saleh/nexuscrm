@@ -24,6 +24,9 @@
             --color-success: #10b981;
             --color-warning: #f59e0b;
             --color-danger: #ef4444;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-gray-400: #9ca3af;
         }
 
         [data-theme="dark"] {
@@ -33,6 +36,9 @@
             --color-secondary: #8a4a72;
             --color-accent: #d16a97;
             --color-border: #2d1b32;
+            --color-success: #34d399;
+            --color-warning: #fbbf24;
+            --color-gray-400: #6b7280;
         }
 
         * {
@@ -55,6 +61,67 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
+        }
+
+        /* Histogram Chart Styles */
+        .histogram-chart {
+            display: flex;
+            align-items: flex-end; /* Anchors bars to the bottom */
+            justify-content: space-around;
+            height: 250px; 
+            padding: 40px 10px 10px 10px;
+            margin-top: 20px;
+            border-bottom: 2px solid var(--color-border);
+            background-color: transparent;
+        }
+
+        .chart-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+
+        .bar-container {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+        }
+
+        .bar {
+            width: 45px; /* Fixed width prevents horizontal stretching */
+            border-radius: 10px; /* Match the rounded tops in your image */
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .bar:hover {
+            transform: scaleY(1.05); /* Grow slightly on hover */
+            filter: brightness(1.1);
+            cursor: pointer;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -30px; /* Positions number above the bar */
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .bar-label {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text);
+            text-align: center;
+            opacity: 0.8;
         }
 
         /* Header Styles */

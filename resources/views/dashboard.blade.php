@@ -35,6 +35,50 @@
         </div>
     </div>
 
+<!-- Weekly Follow-up Distribution -->
+<div class="card mb-6">
+    <h2 class="card-title mb-6">Weekly Follow-up Distribution</h2>
+    
+    @php
+        // Get follow-ups for next 7 days
+        $weeklyData = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = now()->addDays($i);
+            $count = Auth::user()->clients()
+                ->whereDate('next_follow_up', $date)
+                ->count();
+            
+            $weeklyData[] = [
+                'day' => $date->format('D'),
+                'full_day' => $date->format('l'),
+                'date' => $date->format('M d'),
+                'count' => $count,
+                'is_today' => $date->isToday(),
+            ];
+        }
+        $maxWeekly = max(array_column($weeklyData, 'count')) ?: 1;
+    @endphp
+
+    <div class="histogram-chart">
+        @foreach($weeklyData as $day)
+            @php $height = ($day['count'] / $maxWeekly) * 100; @endphp
+            <div class="chart-column">
+                <div class="bar-container">
+                    <div class="bar" style="height: {{ max($height, 5) }}%; background-color: {{ $day['is_today'] ? 'var(--color-accent)' : 'var(--color-primary)' }};">
+                        <span class="bar-value">{{ $day['count'] }}</span>
+                    </div>
+                </div>
+                <div class="bar-label">{{ $day['day'] }}</div>
+                <div class="text-xs opacity-50 mt-1">{{ $day['date'] }}</div>
+            </div>
+        @endforeach
+    </div>
+    
+    <div class="text-center mt-4 text-sm opacity-70">
+        Follow-ups scheduled for the next 7 days
+    </div>
+</div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <!-- Most Active Clients -->
         <div class="card">
@@ -73,7 +117,7 @@
                             <div>
                                 <h3 class="font-medium">{{ $client->name }}</h3>
                                 <p class="text-sm opacity-70">
-                                    {{ $client->next_follow_up->format('M d, Y') }}
+                                    {{ $client->next_follow_up->format('D, M d') }}
                                 </p>
                             </div>
                             <a href="{{ route('clients.show', $client) }}" class="btn btn-accent btn-sm">
