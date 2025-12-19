@@ -578,11 +578,11 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Add visual feedback for form interactions
+
     const formInputs = document.querySelectorAll('.form-input, .form-select, .form-textarea');
     
     formInputs.forEach(input => {
-        // Add focus effect
+
         input.addEventListener('focus', function() {
             this.parentElement?.classList?.add('focused');
         });
@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.parentElement?.classList?.remove('focused');
         });
         
-        // Add class for styling icons
+
         const parent = input.parentElement;
         if (parent.classList.contains('input-with-icon') || 
             parent.classList.contains('textarea-wrapper') || 
@@ -600,14 +600,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Set today's date as default for date input if empty
+
     const dateInput = document.querySelector('input[type="date"]');
     if (dateInput && !dateInput.value) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('placeholder', today);
     }
     
-    // Add subtle animation to form card on load
+
     const formCard = document.querySelector('.form-card');
     if (formCard) {
         formCard.style.opacity = '0';
