@@ -14,13 +14,15 @@
     
     <!-- Styles -->
     <style>
-        /* Theme Variables - EXACTLY as you specified */
+        /* Theme Variables */
         :root[data-theme="light"] {
             --text: #160b19;
             --background: #f6f1f9;
             --primary: #53285d;
             --secondary: #cd89b5;
             --accent: #af4b75;
+            --card: #eee9f1;
+            --stat-card: #e9d1e4;
         }
         
         :root[data-theme="dark"] {
@@ -29,9 +31,11 @@
             --primary: #cda2d7;
             --secondary: #76325e;
             --accent: #b4507a;
+            --card: #130e16;
+            --stat-card: #2b1326;
         }
         
-        /* Use ONLY the provided colors */
+        /* Uses the provided colors */
         :root {
             --color-text: var(--text);
             --color-bg: var(--background);

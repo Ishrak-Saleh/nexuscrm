@@ -167,18 +167,6 @@
                     @endforeach
                 </div>
                 
-                <!-- Chart legend and scale -->
-                <div class="chart-scale">
-                    <div class="scale-labels">
-                        <span class="scale-label">0</span>
-                        <span class="scale-label">5</span>
-                        <span class="scale-label">10</span>
-                        <span class="scale-label">15+</span>
-                    </div>
-                    <div class="scale-bar">
-                        <div class="scale-fill"></div>
-                    </div>
-                </div>
                 
                 @php
                     $totalWeekly = array_sum(array_column($weeklyData, 'count'));
@@ -382,6 +370,17 @@
 
 @push('styles')
 <style>
+
+
+    .card {
+        background: var(--card);
+        border-radius: 12px;
+        border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .stats-grid .stat-card {
+        background: var(--stat-card);
+    }
     /* Layout Styles */
     .dashboard-row {
         display: flex;
@@ -555,9 +554,10 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        height: 280px;
+        height: auto;
+        min-height: 280px;
         padding: 0 0.5rem;
-        border-bottom: 1px solid var(--color-border);
+        border-bottom: none;
     }
     
     .chart-day {
@@ -584,8 +584,9 @@
     }
     
     .bar-container {
-        width: 80%;
-        height: 220px;
+        width: 100%;
+        height: auto;
+        min-height: 220px;
         display: flex;
         align-items: flex-end;
         justify-content: center;
@@ -593,11 +594,12 @@
     }
     
     .bar {
-        width: 75%;
+        width: 80%;
         border-radius: 5px;
         transition: height 0.3s ease;
         position: relative;
         min-height: 2px;
+        max-height: 220px;
     }
     
     .bar-value {
@@ -676,44 +678,6 @@
         margin-left: 1px;
     }
     
-    /* Chart Scale */
-    .chart-scale {
-        padding: 0 0.5rem;
-        margin-top: 0.75rem;
-    }
-    
-    .scale-labels {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 4px;
-    }
-    
-    .scale-label {
-        font-size: 0.625rem;
-        opacity: 0.7;
-        color: var(--color-text);
-    }
-    
-    .scale-bar {
-        height: 4px;
-        background-color: var(--color-border);
-        border-radius: 2px;
-        position: relative;
-    }
-    
-    .scale-fill {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: linear-gradient(90deg, 
-            var(--color-primary) 0%, 
-            var(--color-secondary) 50%, 
-            var(--color-accent) 100%);
-        border-radius: 2px;
-        opacity: 0.5;
-    }
     
     .scale-badge {
         font-size: 0.75rem;
@@ -761,7 +725,7 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
         padding-top: 1rem;
-        border-top: 1px solid var(--color-border);
+        border-top: none;
         margin-top: 1rem;
     }
     
@@ -990,6 +954,8 @@
         color: var(--color-text);
     }
     
+
+
     /* Quick Actions */
     .quick-actions {
         display: grid;
@@ -1196,9 +1162,6 @@
             grid-template-columns: repeat(2, 1fr);
         }
         
-        .chart-bars {
-            height: 220px;
-        }
         
         .bar-container {
             height: 150px;
