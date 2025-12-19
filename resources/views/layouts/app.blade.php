@@ -23,6 +23,8 @@
             --accent: #af4b75;
             --card: #eee9f1;
             --stat-card: #e9d1e4;
+            --button: #743652;
+            --button-hover: #b4507a;
         }
         
         :root[data-theme="dark"] {
@@ -33,8 +35,20 @@
             --accent: #b4507a;
             --card: #130e16;
             --stat-card: #2b1326;
+            --button: #743652;
+            --button-hover: #b4507a;
         }
         
+        :root[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+        :root[data-theme="light"] input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0.6;
+        }
+
         /* Uses the provided colors */
         :root {
             --color-text: var(--text);
@@ -122,12 +136,12 @@
         }
 
         .nav-links a:hover {
-            background-color: var(--color-primary);
+            background-color: var(--button-hover);
             color: white;
         }
 
         .nav-links a.active {
-            background-color: var(--color-primary);
+            background-color: var(--button-hover);
             color: white;
         }
 

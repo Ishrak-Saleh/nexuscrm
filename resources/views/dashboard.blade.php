@@ -370,891 +370,859 @@
 
 @push('styles')
 <style>
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--card);
+}
+
+.stats-grid .stat-card {
+    background: var(--stat-card);
+}
+
+/* Layout Styles */
+.dashboard-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.half-width {
+    flex: 1;
+    min-width: 300px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* Header Styles */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.last-updated {
+    font-size: 0.875rem;
+    opacity: 0.7;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+/* Card Styles */
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.card-subtitle {
+    font-size: 0.875rem;
+    opacity: 0.7;
+}
+
+/* Most Active Clients Styles */
+.client-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.client-activity-item {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.client-activity-item:hover {
+    border-color: var(--secondary);
+    background-color: rgba(83, 40, 93, 0.05);
+}
+
+.client-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.client-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.client-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.client-name {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+}
+
+.client-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    opacity: 0.7;
+}
+
+.separator {
+    opacity: 0.5;
+}
+
+.client-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.followup-date-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+.today-badge {
+    background-color: rgba(175, 75, 117, 0.2);
+    color: var(--accent);
+}
+
+.upcoming-badge {
+    background-color: rgba(83, 40, 93, 0.1);
+    color: var(--primary);
+}
+
+/* Weekly Chart Styles */
+.weekly-chart-container {
+    padding: 1rem 0;
+}
+
+.chart-bars {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: auto;
+    min-height: 280px;
+    padding: 0 0.5rem;
+    border-bottom: none;
+}
+
+.chart-day {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.25rem;
+    position: relative;
+}
+
+.day-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.date-label {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.bar-container {
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+}
+
+.bar {
+    width: 80%;
+    border-radius: 5px;
+    transition: height 0.3s ease;
+    position: relative;
+    min-height: 2px;
+    max-height: 220px;
+}
+
+.bar-value {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--background);
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--secondary);
+    white-space: nowrap;
+    display: none; !important
+}
 
 
-    .card {
-        background: var(--card);
-        border-radius: 12px;
-        border: 1px solid rgba(0,0,0,0.04);
+.day-count {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-align: center;
+    min-height: 1.5rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.capped-warning svg {
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+}
+
+/* Weekly Chart with Cap */
+.max-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    pointer-events: none;
+}
+
+.max-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--accent);
+    opacity: 0.7;
+}
+
+.max-label {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    background-color: var(--accent);
+    color: var(--background);
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 0.625rem;
+    font-weight: 600;
+}
+
+.capped-indicator {
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-left: 1px;
+}
+
+.scale-badge {
+    font-size: 0.75rem;
+    background-color: rgba(175, 75, 117, 0.1);
+    color: var(--accent);
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    margin-left: 0.5rem;
+}
+
+/* Capped Alert */
+.capped-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: rgba(175, 75, 117, 0.1);
+    border: 1px solid var(--accent);
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.alert-icon svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+}
+
+.alert-text {
+    flex: 1;
+    color: var(--text);
+}
+
+/* Chart Summary */
+.chart-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: none;
+    margin-top: 1rem;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-label {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.summary-value.accent {
+    color: var(--accent);
+}
+
+.max-exceeded {
+    color: var(--accent);
+}
+
+.max-normal {
+    color: var(--secondary);
+}
+
+/* Upcoming Follow-ups Styles */
+.followup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.followup-item {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.followup-item:hover {
+    background-color: rgba(83, 40, 93, 0.05);
+}
+
+.followup-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.followup-date {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    background-color: var(--primary);
+    color: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.followup-date.today {
+    background-color: var(--accent);
+    animation: pulse 2s infinite;
+}
+
+.date-day {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.date-month {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+.followup-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.followup-client {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+}
+
+.followup-meta {
+    font-size: 0.875rem;
+    opacity: 0.7;
+    color: var(--text);
+}
+
+.followup-action {
+    flex-shrink: 0;
+}
+
+/* Recent Activity Styles */
+.activity-timeline {
+    position: relative;
+}
+
+.activity-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    position: relative;
+}
+
+.activity-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 50px;
+    bottom: -10px;
+    width: 1px;
+    background-color: var(--secondary);
+    z-index: 1;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    background-color: var(--secondary);
+    color: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.activity-icon.call { background-color: var(--accent); }
+.activity-icon.meeting { background-color: var(--primary); }
+.activity-icon.email { background-color: var(--secondary); }
+
+.activity-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.activity-content {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.activity-type {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.activity-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    color: var(--text);
+}
+
+.activity-text {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+    color: var(--text);
+}
+
+.activity-client {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.activity-client a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.activity-client a:hover {
+    text-decoration: underline;
+}
+
+/* Empty State Styles */
+.empty-state {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.empty-state svg {
+    margin-bottom: 0.75rem;
+    opacity: 0.5;
+    color: var(--text);
+}
+
+.empty-state h3 {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.empty-state p {
+    font-size: 0.875rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background-color: var(--background);
+    border: 0.75px solid var(--secondary);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn {
+    border-color: var(--primary);
+    background-color: rgba(83, 40, 93, 0.1);
+}
+
+.accent-btn {
+    border-color: var(--accent);
+    background-color: rgba(175, 75, 117, 0.1);
+}
+
+.secondary-btn {
+    border-color: var(--secondary);
+    background-color: rgba(205, 137, 181, 0.1);
+}
+
+.action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+}
+
+.primary-btn .action-icon {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+.accent-btn .action-icon {
+    background-color: var(--accent);
+    color: var(--background);
+}
+
+.secondary-btn .action-icon {
+    background-color: var(--secondary);
+    color: var(--background);
+}
+
+.action-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.action-label {
+    font-weight: 500;
+    flex: 1;
+}
+
+.action-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--accent);
+    color: var(--background);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+}
+
+.btn-small {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--background);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent);
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    color: var(--background);
+}
+
+.btn-accent:hover {
+    background-color: var(--primary);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary);
+    color: var(--background);
+}
+
+/* Badge Styles */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-active {
+    background-color: rgba(83, 40, 93, 0.2);
+    color: var(--primary);
+}
+
+.badge-inactive {
+    background-color: rgba(175, 75, 117, 0.2);
+    color: var(--accent);
+}
+
+.badge-lead {
+    background-color: rgba(205, 137, 181, 0.2);
+    color: var(--secondary);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(175, 75, 117, 0.4);
     }
-
-    .stats-grid .stat-card {
-        background: var(--stat-card);
+    70% {
+        box-shadow: 0 0 0 10px rgba(175, 75, 117, 0);
     }
-    /* Layout Styles */
+    100% {
+        box-shadow: 0 0 0 0 rgba(175, 75, 117, 0);
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
     .dashboard-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.5rem;
-        margin-bottom: 1.5rem;
+        flex-direction: column;
     }
     
     .half-width {
-        flex: 1;
-        min-width: 300px;
-    }
-    
-    .full-width {
         width: 100%;
     }
     
-    /* Header Styles */
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-    }
-    
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .last-updated {
-        font-size: 0.875rem;
-        opacity: 0.7;
-    }
-    
-    /* Stats Grid */
     .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    
-    .stat-card {
-        text-align: center;
-        padding: 1.5rem;
-    }
-    
-    .stat-number {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--color-primary);
-        margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-        font-size: 0.875rem;
-        color: var(--color-text);
-        opacity: 0.8;
-    }
-    
-    /* Card Styles */
-    .card-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--color-primary);
-        margin-bottom: 0.5rem;
-    }
-    
-    .card-subtitle {
-        font-size: 0.875rem;
-        opacity: 0.7;
-    }
-    
-    /* Most Active Clients Styles */
-    .client-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .client-activity-item {
-        padding: 0.75rem;
-        border-radius: 0.5rem;
-        transition: all 0.2s ease;
-        border: 1px solid transparent;
-    }
-    
-    .client-activity-item:hover {
-        border-color: var(--color-border);
-        background-color: rgba(83, 40, 93, 0.05);
-    }
-    
-    .client-info {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    
-    .client-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: var(--color-primary);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        flex-shrink: 0;
-    }
-    
-    .client-details {
-        flex: 1;
-        min-width: 0;
-    }
-    
-    .client-name {
-        font-weight: 500;
-        font-size: 1rem;
-        color: var(--color-text);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 0.25rem;
-    }
-    
-    .client-meta {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.875rem;
-        opacity: 0.7;
-    }
-    
-    .separator {
-        opacity: 0.5;
-    }
-    
-    .client-actions {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        flex-shrink: 0;
-    }
-    
-    .followup-date-badge {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
-        border-radius: 9999px;
-        font-weight: 500;
-    }
-    
-    .today-badge {
-        background-color: rgba(175, 75, 117, 0.2);
-        color: var(--color-accent);
-    }
-    
-    .upcoming-badge {
-        background-color: rgba(83, 40, 93, 0.1);
-        color: var(--color-primary);
-    }
-    
-    /* Weekly Chart Styles */
-    .weekly-chart-container {
-        padding: 1rem 0;
-    }
-    
-    .chart-bars {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        height: auto;
-        min-height: 280px;
-        padding: 0 0.5rem;
-        border-bottom: none;
-    }
-    
-    .chart-day {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 0.25rem;
-        position: relative;
-    }
-    
-    .day-label {
-        font-weight: 600;
-        font-size: 0.875rem;
-        margin-bottom: 0.25rem;
-        color: var(--color-text);
-    }
-    
-    .date-label {
-        font-size: 0.75rem;
-        opacity: 0.7;
-        margin-bottom: 0.5rem;
-        color: var(--color-text);
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .bar-container {
-        width: 100%;
-        height: auto;
-        min-height: 220px;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        position: relative;
+        height: 150px;
     }
     
-    .bar {
-        width: 80%;
-        border-radius: 5px;
-        transition: height 0.3s ease;
-        position: relative;
-        min-height: 2px;
-        max-height: 220px;
-    }
-    
-    .bar-value {
-        position: absolute;
-        top: -25px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        padding: 2px 6px;
-        border-radius: 10px;
+    .day-label {
         font-size: 0.75rem;
-        font-weight: 600;
-        border: 1px solid var(--color-border);
-        white-space: nowrap;
-        display: none;
     }
     
-    .bar:hover .bar-value {
-        display: block;
-    }
-    
-    .day-count {
-        margin-top: 0.5rem;
-        font-size: 0.75rem;
-        opacity: 0.8;
-        text-align: center;
-        min-height: 1.5rem;
-        color: var(--color-text);
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-    
-    .capped-warning svg {
-        width: 16px;
-        height: 16px;
-        color: var(--color-accent);
-    }
-    
-    /* Weekly Chart with Cap */
-    .max-indicator {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        pointer-events: none;
-    }
-    
-    .max-line {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background-color: var(--color-accent);
-        opacity: 0.7;
-    }
-    
-    .max-label {
-        position: absolute;
-        top: -20px;
-        right: -10px;
-        background-color: var(--color-accent);
-        color: white;
-        padding: 1px 4px;
-        border-radius: 4px;
+    .date-label {
         font-size: 0.625rem;
-        font-weight: 600;
     }
-    
-    .capped-indicator {
-        font-size: 0.875em;
-        font-weight: bold;
-        margin-left: 1px;
-    }
-    
-    
-    .scale-badge {
-        font-size: 0.75rem;
-        background-color: rgba(175, 75, 117, 0.1);
-        color: var(--color-accent);
-        padding: 0.125rem 0.5rem;
-        border-radius: 9999px;
-        margin-left: 0.5rem;
-    }
-    
-    /* Capped Alert */
-    .capped-alert {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        background-color: rgba(175, 75, 117, 0.1);
-        border: 1px solid var(--color-accent);
-        border-radius: 0.5rem;
-        font-size: 0.75rem;
-        margin-top: 0.75rem;
-    }
-    
-    .alert-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    
-    .alert-icon svg {
-        width: 20px;
-        height: 20px;
-        color: var(--color-accent);
-    }
-    
-    .alert-text {
-        flex: 1;
-        color: var(--color-text);
-    }
-    
-    /* Chart Summary */
-    .chart-summary {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        padding-top: 1rem;
-        border-top: none;
-        margin-top: 1rem;
-    }
-    
-    .summary-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .summary-label {
-        font-size: 0.75rem;
-        opacity: 0.7;
-        margin-bottom: 0.25rem;
-        color: var(--color-text);
+
+    .day-count {
+        font-size: 0.625rem;
     }
     
     .summary-value {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--color-primary);
-    }
-    
-    .summary-value.accent {
-        color: var(--color-accent);
-    }
-    
-    .max-exceeded {
-        color: var(--color-accent);
-    }
-    
-    .max-normal {
-        color: var(--color-secondary);
-    }
-    
-    /* Upcoming Follow-ups Styles */
-    .followup-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    .followup-item {
-        padding: 0.75rem;
-        border-radius: 0.5rem;
-        transition: all 0.2s ease;
-    }
-    
-    .followup-item:hover {
-        background-color: rgba(83, 40, 93, 0.05);
-    }
-    
-    .followup-content {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    
-    .followup-date {
-        width: 48px;
-        height: 48px;
-        border-radius: 0.5rem;
-        background-color: var(--color-primary);
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    
-    .followup-date.today {
-        background-color: var(--color-accent);
-        animation: pulse 2s infinite;
-    }
-    
-    .date-day {
-        font-size: 1rem;
-        font-weight: 600;
-    }
-    
-    .date-month {
-        font-size: 0.75rem;
-        opacity: 0.9;
-    }
-    
-    .followup-info {
-        flex: 1;
-        min-width: 0;
-    }
-    
-    .followup-client {
-        font-weight: 500;
-        font-size: 1rem;
-        color: var(--color-text);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 0.25rem;
-    }
-    
-    .followup-meta {
-        font-size: 0.875rem;
-        opacity: 0.7;
-        color: var(--color-text);
-    }
-    
-    .followup-action {
-        flex-shrink: 0;
-    }
-    
-    /* Recent Activity Styles - UPDATED TIMELINE */
-    .activity-timeline {
-        position: relative;
-    }
-    
-    .activity-item {
-        display: flex;
-        gap: 1rem;
-        padding: 0.75rem 0;
-        position: relative;
-    }
-    
-    /* UPDATED: Timeline line starts BELOW the icon */
-    .activity-item:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        left: 20px; /* Center of the icon (20px = 40px/2) */
-        top: 50px; /* CHANGED: Start BELOW the 40px icon + padding */
-        bottom: -10px; /* Extend to next item */
-        width: 1px;
-        background-color: var(--color-border);
-        z-index: 1;
-    }
-    
-    .activity-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 0.5rem;
-        background-color: var(--color-secondary);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        position: relative;
-        z-index: 2; /* Ensure icon appears above the line */
-    }
-    
-    .activity-icon.call { background-color: var(--color-accent); }
-    .activity-icon.meeting { background-color: var(--color-primary); }
-    .activity-icon.email { background-color: var(--color-secondary); }
-    
-    .activity-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-    
-    .activity-content {
-        flex: 1;
-        min-width: 0;
-        position: relative;
-        z-index: 2; /* Ensure content appears above the line */
-    }
-    
-    .activity-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.25rem;
-    }
-    
-    .activity-type {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: var(--color-primary);
-    }
-    
-    .activity-time {
-        font-size: 0.75rem;
-        opacity: 0.7;
-        color: var(--color-text);
-    }
-    
-    .activity-text {
-        font-size: 0.875rem;
-        margin-bottom: 0.25rem;
-        line-height: 1.4;
-        color: var(--color-text);
-    }
-    
-    .activity-client {
-        font-size: 0.75rem;
-        opacity: 0.8;
-    }
-    
-    .activity-client a {
-        color: var(--color-primary);
-        text-decoration: none;
-    }
-    
-    .activity-client a:hover {
-        text-decoration: underline;
-    }
-    
-    /* Empty State Styles */
-    .empty-state {
-        text-align: center;
-        padding: 2rem 0;
-    }
-    
-    .empty-state svg {
-        margin-bottom: 0.75rem;
-        opacity: 0.5;
-    }
-    
-    .empty-state h3 {
-        font-weight: 500;
-        margin-bottom: 0.25rem;
-        color: var(--color-text);
-    }
-    
-    .empty-state p {
-        font-size: 0.875rem;
-        opacity: 0.7;
-        margin-bottom: 1rem;
-        color: var(--color-text);
-    }
-    
-
-
-    /* Quick Actions */
-    .quick-actions {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-    
-    .quick-action-btn {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 1rem;
-        border-radius: 0.75rem;
-        background-color: var(--color-bg);
-        border: 2px solid var(--color-border);
-        color: var(--color-text);
-        text-decoration: none;
-        transition: all 0.2s ease;
-        position: relative;
-    }
-    
-    .quick-action-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    
-    .primary-btn {
-        border-color: var(--color-primary);
-        background-color: rgba(83, 40, 93, 0.1);
-    }
-    
-    .accent-btn {
-        border-color: var(--color-accent);
-        background-color: rgba(175, 75, 117, 0.1);
-    }
-    
-    .secondary-btn {
-        border-color: var(--color-secondary);
-        background-color: rgba(205, 137, 181, 0.1);
-    }
-    
-    .action-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         font-size: 1.25rem;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background-color: var(--color-border);
     }
     
-    .primary-btn .action-icon {
-        background-color: var(--color-primary);
-        color: white;
+    .quick-actions {
+        grid-template-columns: 1fr;
     }
     
-    .accent-btn .action-icon {
-        background-color: var(--color-accent);
-        color: white;
+    .activity-item:not(:last-child)::after {
+        top: 45px;
     }
-    
-    .secondary-btn .action-icon {
-        background-color: var(--color-secondary);
-        color: white;
-    }
-    
-    .action-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-    
-    .action-label {
-        font-weight: 500;
-        flex: 1;
-    }
-    
-    .action-badge {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background-color: var(--color-accent);
-        color: white;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-    
-    /* Button Styles */
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 500;
-        text-decoration: none;
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: all 0.2s ease;
-        font-size: 0.875rem;
-    }
-    
-    .btn-small {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.75rem;
-    }
-    
-    .btn-primary {
-        background-color: var(--color-primary);
-        color: white;
-    }
-    
-    .btn-primary:hover {
-        background-color: var(--color-accent);
-    }
-    
-    .btn-secondary {
-        background-color: var(--color-secondary);
-        color: white;
-    }
-    
-    .btn-secondary:hover {
-        background-color: var(--color-accent);
-    }
-    
-    .btn-accent {
-        background-color: var(--color-accent);
-        color: white;
-    }
-    
-    .btn-accent:hover {
-        background-color: var(--color-primary);
-    }
-    
-    .btn-outline {
-        background-color: transparent;
-        border-color: var(--color-primary);
-        color: var(--color-primary);
-    }
-    
-    .btn-outline:hover {
-        background-color: var(--color-primary);
-        color: white;
-    }
-    
-    /* Badge Styles */
-    .badge {
-        display: inline-block;
-        padding: 0.25rem 0.5rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-    
-    .badge-active {
-        background-color: rgba(83, 40, 93, 0.2);
-        color: var(--color-primary);
-    }
-    
-    .badge-inactive {
-        background-color: rgba(175, 75, 117, 0.2);
-        color: var(--color-accent);
-    }
-    
-    .badge-lead {
-        background-color: rgba(205, 137, 181, 0.2);
-        color: var(--color-secondary);
-    }
-    
-    /* Animations */
-    @keyframes pulse {
-        0% {
-            box-shadow: 0 0 0 0 rgba(175, 75, 117, 0.4);
-        }
-        70% {
-            box-shadow: 0 0 0 10px rgba(175, 75, 117, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0 rgba(175, 75, 117, 0);
-        }
-    }
-    
-    .pulse {
-        animation: pulse 2s infinite;
-    }
-    
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-        .dashboard-row {
-            flex-direction: column;
-        }
-        
-        .half-width {
-            width: 100%;
-        }
-        
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        
-        .bar-container {
-            height: 150px;
-        }
-        
-        .day-label {
-            font-size: 0.75rem;
-        }
-        
-        .date-label {
-            font-size: 0.625rem;
-        }
+}
 
-        .day-count {
-            font-size: 0.625rem;
-        }
-        
-        .summary-value {
-            font-size: 1.25rem;
-        }
-        
-        .quick-actions {
-            grid-template-columns: 1fr;
-        }
-        
-        /* Adjust timeline for mobile */
-        .activity-item:not(:last-child)::after {
-            top: 45px; /* Adjust for mobile */
-        }
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
     
-    @media (max-width: 480px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .chart-bars {
-            height: 180px;
-        }
-        
-        .bar-container {
-            height: 100px;
-        }
-        
-        .bar-value {
-            font-size: 0.625rem;
-            padding: 1px 4px;
-        }
-        
-        .scale-labels {
-            font-size: 0.5rem;
-        }
-        
-        .card-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-        
-        .header-actions {
-            width: 100%;
-            justify-content: space-between;
-        }
-        
-        /* Adjust timeline for smaller screens */
-        .activity-item:not(:last-child)::after {
-            top: 40px; /* Adjust for very small screens */
-        }
+    .chart-bars {
+        height: 180px;
     }
+    
+    .bar-container {
+        height: 100px;
+    }
+    
+    .bar-value {
+        font-size: 0.625rem;
+        padding: 1px 4px;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .activity-item:not(:last-child)::after {
+        top: 40px;
+    }
+}
 </style>
 @endpush
 
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Show bar values on hover
-        const bars = document.querySelectorAll('.bar');
-        bars.forEach(bar => {
-            bar.addEventListener('mouseenter', () => {
-                const barValue = bar.querySelector('.bar-value');
-                if (barValue) {
-                    barValue.style.display = 'block';
-                }
-            });
-            
-            bar.addEventListener('mouseleave', () => {
-                const barValue = bar.querySelector('.bar-value');
-                if (barValue) {
-                    barValue.style.display = 'none';
-                }
-            });
-        });
-        
         // Add tooltips for capped warning icons
         const warnings = document.querySelectorAll('.capped-warning');
         warnings.forEach(warning => {
