@@ -651,7 +651,7 @@
                     <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         Dashboard
                     </a>
-                    <a href="{{ route('clients.index') }}" class="{{ request()->routeIs('clients.*') ? 'active' : '' }}">
+                    <a href="{{ route('clients.index') }}" class="{{ request()->routeIs(['clients.index', 'clients.create', 'clients.show', 'clients.edit']) ? 'active' : '' }}">
                         Clients
                     </a>
                     <a href="{{ route('clients.today-followups') }}" class="{{ request()->routeIs('clients.today-followups') ? 'active' : '' }}">
