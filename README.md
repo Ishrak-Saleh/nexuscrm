@@ -209,7 +209,7 @@ updated_at  TIMESTAMP
    - Recent activity summary
    - Most active clients
 4. Save or print the professional PDF report
-
+---
 
    
 ##Developer
