@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         $user = User::firstOrCreate(
             ['email' => 'demo@nexuscrm.com'],
             [
-                'name' => 'Ishrak Saleh Chowdhury',
-                'password' => Hash::make('password'),
+                'name' => 'Demo User',
+                'password' => Hash::make('P@ssword123'),
             ]
         );
 
