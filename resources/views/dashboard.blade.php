@@ -415,17 +415,6 @@
                 <span class="action-label">All Clients</span>
             </a>
             
-            <div class="quick-action-btn report-quick-btn" onclick="document.querySelector('.report-download-btn').click()">
-                <span class="action-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 15V3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                <span class="action-label">Download Report</span>
-                <span class="report-new-badge">NEW</span>
-            </div>
         </div>
     </div>
 @endsection
@@ -433,24 +422,27 @@
 @push('styles')
 <style>
     :root {
-        --color-text: #160b19;
-        --color-bg: var(--background);
-        --color-primary: #52285d;
-        --color-secondary: #cd89b5;
-        --color-accent: #af4b75;
-        --color-border: #e5d8eb;
-        --color-success: #10b981;
-        --color-warning: #f59e0b;
-        --color-danger: #ef4444;
+            --text: #160b19;
+            --background: #f6f1f9;
+            --primary: #53285d;
+            --secondary: #cd89b5;
+            --accent: #af4b75;
+            --card: #eee9f1;
+            --stat-card: #e9d1e4;
+            --button: #743652;
+            --button-hover: #b4507a;
     }
 
     [data-theme="dark"] {
-        --color-text: #f6f1f9;
-        --color-bg: var(--background);
-        --color-primary: #b184bb;
-        --color-secondary: #8a4a72;
-        --color-accent: #d16a97;
-        --color-border: #2d1b32;
+            --text: #f1e6f4;
+            --background: #0b060e;
+            --primary: #cda2d7;
+            --secondary: #76325e;
+            --accent: #b4507a;
+            --card: #130e16;
+            --stat-card: #2b1326;
+            --button: #743652;
+            --button-hover: #b4507a;
     }
 
     /* Layout Styles */
@@ -498,7 +490,7 @@
         margin-bottom: 2rem;
     }
 
-    .stat-card {
+    .card.stat-card {
         background: var(--stat-card);
         border: 1px solid var(--stat-card);
         border-radius: 1rem;
@@ -510,7 +502,7 @@
     .stat-card:hover {
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         transform: translateY(-2px);
-        border-color: var(--color-secondary);
+        border-color: var(--stat-card);
     }
 
     .stat-number {
