@@ -219,4 +219,4 @@ updated_at  TIMESTAMP
 - Project: NexusCRM
 
 ---
--NexusCRM: Streamlining client relationships with elegance and efficiency
+*NexusCRM: Streamlining client relationships with elegance and efficiency*
